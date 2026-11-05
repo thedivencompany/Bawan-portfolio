@@ -432,235 +432,123 @@ body{overflow-x:clip}
 @media (prefers-reduced-motion: reduce){ .glass.rv{opacity:1;transform:none;filter:none;transition:border-color .35s} }
 @media (max-width:820px){ .contact-grid{grid-template-columns:1fr} .row2{grid-template-columns:1fr} }
 
-/* ---------- preloader: realistic FDM print of the name ---------- */
+/* ---------- preloader ---------- */
 html.pre-lock,html.pre-lock body{overflow:hidden}
-.pre{position:fixed;inset:0;z-index:60;color:#E9EBEE;cursor:pointer}
+.pre{position:fixed;inset:0;z-index:60;background:#050505;color:#E9EBEE;display:grid;place-items:center;overflow:hidden;cursor:pointer;transition:transform 1.15s cubic-bezier(.76,0,.24,1)}
+.pre::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);opacity:0;transition:opacity .3s}
+.pre.out{transform:translateY(-100%)}
+.pre.out::after{opacity:1}
 .pre.gone{display:none}
-.door{position:absolute;left:0;right:0;height:50.5%;background:#050505;transition:transform 1.2s cubic-bezier(.76,0,.24,1)}
-.door.top{top:0}.door.bot{bottom:0}
-.door.top::after,.door.bot::before{content:"";position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);opacity:0;transition:opacity .25s}
-.door.top::after{bottom:0}.door.bot::before{top:0}
-.pre.open .door.top{transform:translateY(-100%)}.pre.open .door.bot{transform:translateY(100%)}
-.pre.open .door.top::after,.pre.open .door.bot::before{opacity:1}
-.pre-ui{position:absolute;inset:0;transition:opacity .5s ease}
-.pre.fade .pre-ui{opacity:0}
-.pre-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.08) 1px,transparent 1.2px);background-size:28px 28px;-webkit-mask-image:radial-gradient(60% 50% at 50% 50%,#000,transparent);mask-image:radial-gradient(60% 50% at 50% 50%,#000,transparent);opacity:0;animation:preFade 1.2s ease .1s forwards}
-#printCv{position:absolute;inset:0;width:100%;height:100%;display:block}
-.ps{position:absolute;left:0;right:0;margin:0;text-align:center;min-height:1.5em;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:clamp(11px,1.1vw,13px);letter-spacing:.7em;padding-left:.7em;text-transform:uppercase;color:#A3A6AC}
-.ps .caret{display:inline-block;width:.55em;height:1.05em;margin-left:.15em;background:#E9EBEE;vertical-align:-.18em;animation:blink .75s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-.hud{position:absolute;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.06em;line-height:1.75;color:#7D8087;opacity:0;animation:preFade .8s ease .35s forwards}
-.hud b{font-weight:400;color:#E4E5E8;font-variant-numeric:tabular-nums}
-.hud.tl{top:calc(env(safe-area-inset-top,0px) + 28px);left:clamp(20px,4vw,56px)}
-.hud.tr{top:calc(env(safe-area-inset-top,0px) + 28px);right:clamp(20px,4vw,56px);text-align:right}
-.hud.bl{bottom:calc(env(safe-area-inset-bottom,0px) + 30px);left:clamp(20px,4vw,56px)}
-.hud.br{bottom:calc(env(safe-area-inset-bottom,0px) + 30px);right:clamp(20px,4vw,56px);text-align:right}
-.hud .live::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#FFB46B;box-shadow:0 0 8px #FFB46B;margin-right:8px;vertical-align:1px;animation:breathe 1s ease-in-out infinite}
-.pre.done .hud .live::before{background:#86D9A8;box-shadow:0 0 8px #86D9A8}
-.hud .big{font-size:clamp(22px,2.6vw,34px);letter-spacing:-.02em;font-family:"Inter Tight",sans-serif;font-weight:300;color:#F2F2F2;line-height:1.1}
-.pbar{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.06)}
-.pbar i{position:absolute;inset:0;background:linear-gradient(90deg,#6b6f76,#fff);transform-origin:0 50%;transform:scaleX(0)}
+.pre-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(55% 55% at 50% 50%,#000,transparent);mask-image:radial-gradient(55% 55% at 50% 50%,#000,transparent);opacity:0;animation:preFade 1.4s ease .1s forwards}
+.pre-scan{position:absolute;left:0;right:0;top:0;height:140px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.05),transparent);transform:translateY(-140px);animation:preScan 2.6s cubic-bezier(.5,0,.5,1) .25s 1 forwards}
+.pre-ring{position:absolute;left:50%;top:50%;width:min(70vmin,600px);height:min(70vmin,600px);transform:translate(-50%,-50%);pointer-events:none}
+.pre-ring svg{width:100%;height:100%;overflow:visible}
+.pre-ring .arc{fill:none;stroke:rgba(255,255,255,.16);stroke-width:.35;stroke-dasharray:1;stroke-dashoffset:1;animation:preDraw 2s cubic-bezier(.6,0,.2,1) .2s forwards}
+.pre-ring .arc2{fill:none;stroke:rgba(255,255,255,.08);stroke-width:.3;stroke-dasharray:.02 .02}
+.pre-ring .ticks{transform-origin:100px 100px;opacity:0;animation:preSpin 40s linear infinite,preFade 1s ease .6s forwards}
+.pre-ring .ticks line{stroke:rgba(255,255,255,.22);stroke-width:.3}
+.pre-ring .orbit{transform-origin:100px 100px;animation:preSpin 3.2s cubic-bezier(.5,0,.5,1) infinite}
+.pre-ring .orbit circle{fill:#E9EBEE}
+.pre-corner{position:absolute;width:30px;height:30px;border:0 solid rgba(255,255,255,.4);transform:scale(0);animation:preCorner .9s cubic-bezier(.2,.8,.2,1) .15s forwards}
+.pre-corner.tl{top:28px;left:28px;border-top-width:1px;border-left-width:1px;transform-origin:0 0}
+.pre-corner.tr{top:28px;right:28px;border-top-width:1px;border-right-width:1px;transform-origin:100% 0}
+.pre-corner.bl{bottom:28px;left:28px;border-bottom-width:1px;border-left-width:1px;transform-origin:0 100%}
+.pre-corner.br{bottom:28px;right:28px;border-bottom-width:1px;border-right-width:1px;transform-origin:100% 100%}
+.pre-hint{position:absolute;top:36px;right:72px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#5f6268;opacity:0;animation:preFade .8s ease 1.2s forwards}
+.pre-center{position:relative;text-align:center;padding:0 24px}
+.pre-kicker{display:inline-flex;align-items:center;gap:10px;margin:0 0 26px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:#80838A;opacity:0;animation:preFade .6s ease .35s forwards}
+.pre-kicker::before{content:"";width:6px;height:6px;border-radius:50%;background:#86D9A8;box-shadow:0 0 10px #86D9A8;animation:breathe 1.1s ease-in-out infinite}
+.pre-name{margin:0;font-family:"Inter Tight","Helvetica Neue",Arial,sans-serif;font-weight:300;font-size:clamp(40px,9.2vw,150px);letter-spacing:-.035em;line-height:1}
+.pre-name .wd{display:inline-block;white-space:nowrap}
+.pre-name .ch{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.pre-name .ch > span{display:inline-block;transform:translateY(112%);color:#55585E}
+.pre.go .pre-name .ch > span{transform:none;color:#F2F2F2;transition:transform 1.05s cubic-bezier(.16,1,.3,1) var(--d),color .6s ease var(--d2)}
+.pre.leave .pre-name .ch > span{transform:translateY(-112%);transition:transform .65s cubic-bezier(.7,0,.84,0) var(--d3)}
+.pre-sub{margin:26px 0 0;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:clamp(11px,1.1vw,13px);text-transform:uppercase;color:#9A9DA3;letter-spacing:1.6em;opacity:0;transition:letter-spacing 1.6s cubic-bezier(.16,1,.3,1) .75s,opacity 1.1s ease .75s}
+.pre.go .pre-sub{letter-spacing:.7em;opacity:1}
+.pre.leave .pre-sub{opacity:0;transition:opacity .35s ease}
+.pre-foot{position:absolute;left:clamp(28px,5vw,72px);right:clamp(28px,5vw,72px);bottom:calc(env(safe-area-inset-bottom,0px) + clamp(40px,7vh,64px));display:flex;align-items:center;gap:20px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;color:#80838A;opacity:0;animation:preFade .8s ease .5s forwards}
+.pre-bar{flex:1;height:1px;background:rgba(255,255,255,.1);position:relative;overflow:hidden}
+.pre-bar i{position:absolute;inset:0;background:linear-gradient(90deg,#6b6f76,#fff);transform-origin:0 50%;transform:scaleX(0)}
+#preNum{color:#E9EBEE;font-variant-numeric:tabular-nums;min-width:3.2ch;text-align:right;font-size:13px}
+.pre.leave .pre-foot,.pre.leave .pre-kicker,.pre.leave .pre-hint{opacity:0!important;transition:opacity .3s;animation:none}
 @keyframes preFade{to{opacity:1}}
-@media (max-width:600px){ .hud.tr{display:none} }
+@keyframes preScan{to{transform:translateY(calc(100vh + 140px))}}
+@keyframes preDraw{to{stroke-dashoffset:0}}
+@keyframes preSpin{to{transform:rotate(360deg)}}
+@keyframes preCorner{to{transform:scale(1)}}
+@media (max-width:600px){ .pre-hint{display:none} .pre-foot .who{display:none} }
 @media (prefers-reduced-motion: reduce){
-  .door{transition:opacity .5s ease}.pre.open .door.top,.pre.open .door.bot{transform:none;opacity:0}
-  .hud,.pre-dots{animation:none;opacity:1}.ps .caret{animation:none}
+  .pre{transition:opacity .5s ease} .pre.out{transform:none;opacity:0}
+  .pre-scan,.pre-ring .orbit{display:none}
+  .pre-name .ch > span{transform:none;color:#F2F2F2} .pre-sub{letter-spacing:.7em;opacity:1}
+  .pre-grid,.pre-kicker,.pre-foot,.pre-hint,.pre-ring .ticks{animation:none;opacity:1} .pre-corner{animation:none;transform:none} .pre-ring .arc{animation:none;stroke-dashoffset:0}
 }
 </style>
 </head>
 <body>
 <div class="pre" id="pre" role="status" aria-label="Loading Bawan Siddharth’s portfolio">
-  <div class="door top"></div><div class="door bot"></div>
-  <div class="pre-ui">
-    <div class="pre-dots"></div>
-    <canvas id="printCv" aria-hidden="true"></canvas>
-    <p class="ps" id="pPort" aria-hidden="true"></p>
-    <div class="hud tl">PrintCity · Job 001<br><b>bawan_siddharth.gcode</b></div>
-    <div class="hud tr">Nozzle <b id="pTemp">24°C</b> · Bed <b id="pBed">24°C</b><br>Click to skip</div>
-    <div class="hud bl"><span class="live" id="pStat">Heating nozzle</span><br>Layer <b id="pLayer">00</b> / <b id="pLayers">00</b></div>
-    <div class="hud br"><span class="big" id="pPct">0%</span><br>Time left <b id="pEta">0:07</b></div>
-    <div class="pbar"><i id="pBar"></i></div>
+  <div class="pre-grid"></div>
+  <div class="pre-scan"></div>
+  <div class="pre-ring" aria-hidden="true"><svg viewBox="0 0 200 200"><circle class="arc2" cx="100" cy="100" r="88" pathLength="1"/><circle class="arc" cx="100" cy="100" r="98" pathLength="1" transform="rotate(-90 100 100)"/><g class="ticks" id="preTicks"></g><g class="orbit"><circle cx="100" cy="2" r="1.3"/></g></svg></div>
+  <span class="pre-corner tl"></span><span class="pre-corner tr"></span><span class="pre-corner bl"></span><span class="pre-corner br"></span>
+  <span class="pre-hint" aria-hidden="true">Click to skip</span>
+  <div class="pre-center">
+    <p class="pre-kicker"><span id="preTask">Initialising system</span></p>
+    <p class="pre-name" aria-hidden="true">Bawan Siddharth</p>
+    <p class="pre-sub">Portfolio</p>
   </div>
+  <div class="pre-foot"><span class="who">Robotics &amp; Automation · Mechanical Engineering</span><div class="pre-bar"><i id="preBar"></i></div><span id="preNum">000</span></div>
 </div>
 <script>
 (function(){
   var pre=document.getElementById("pre"), html=document.documentElement;
   var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
   html.classList.add("pre-lock");
-  var cv=document.getElementById("printCv"), ctx=cv.getContext("2d");
-  var $=function(id){ return document.getElementById(id); };
-  var bar=$("pBar"), pct=$("pPct"), lay=$("pLayer"), lays=$("pLayers"), stat=$("pStat"), tN=$("pTemp"), tB=$("pBed"), eta=$("pEta"), port=$("pPort");
-  // timeline (seconds)
-  var T_HEAT=.9, T_HOME=.6, T_PRINT=5.2, T_PARK=.55;
-  var W,H,dpr,fs,lines,bx,by,bw,bh,bedY,N,LH,layers,printed,hot,mask,totalLen,sc;
-  function lerp(a,b,t){ return a+(b-a)*t; }
-  function ease(t){ return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; }
-  function build(){
-    W=innerWidth; H=innerHeight; dpr=Math.min(2,window.devicePixelRatio||1);
-    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
-    var FONT=function(px){ return '400 '+px+'px "Inter Tight","Helvetica Neue",Arial,sans-serif'; };
-    fs=Math.max(44,Math.min(160,W*.094)); ctx.font=FONT(fs);
-    var full="BAWAN SIDDHARTH";
-    if(ctx.measureText(full).width>W*.86){ lines=["BAWAN","SIDDHARTH"]; ctx.font=FONT(100); fs=Math.min(150,W*.84/ctx.measureText("SIDDHARTH").width*100); }
-    else lines=[full];
-    ctx.font=FONT(fs);
-    var asc=ctx.measureText("H").actualBoundingBoxAscent||fs*.72, gap=fs*.2;
-    bw=Math.max.apply(null,lines.map(function(l){ return ctx.measureText(l).width; }));
-    bh=asc*lines.length+gap*(lines.length-1);
-    bx=(W-bw)/2; by=H/2-bh/2-24; bedY=by+bh; sc=Math.max(.55,Math.min(1,fs/150));
-    // glyph mask (device pixels)
-    var mw=Math.ceil(bw*dpr)+2, mh=Math.ceil(bh*dpr)+2;
-    mask=document.createElement("canvas"); mask.width=mw; mask.height=mh;
-    var m=mask.getContext("2d"); m.scale(dpr,dpr); m.font=FONT(fs); m.fillStyle="#fff"; m.textBaseline="alphabetic";
-    lines.forEach(function(l,i){ m.fillText(l,(bw-m.measureText(l).width)/2,asc*(i+1)+gap*i); });
-    var data=m.getImageData(0,0,mw,mh).data;
-    // slice into layers, keep each layer's real extents so the nozzle only travels over material
-    N=Math.max(18,Math.min(40,Math.round(bh/(5.6*Math.max(.75,sc))))); LH=bh/N;
-    layers=[]; totalLen=0;
-    for(var L=0;L<N;L++){
-      var y1=Math.round((bh-L*LH)*dpr), y0=Math.round((bh-(L+1)*LH)*dpr), mn=1e9, mx=-1;
-      for(var yy=Math.max(0,y0);yy<Math.min(mh,y1);yy+=2){ for(var xx=0;xx<mw;xx+=2){ if(data[(yy*mw+xx)*4+3]>60){ if(xx<mn) mn=xx; if(xx>mx) mx=xx; } } }
-      if(mx<0){ layers.push(null); continue; }
-      var x0=mn/dpr-2, x1=mx/dpr+2, dir=layers.filter(Boolean).length%2===0?1:-1;
-      layers.push({i:L,x0:x0,x1:x1,dir:dir,len:x1-x0,y:bh-(L+1)*LH}); totalLen+=x1-x0;
-    }
-    var acc=0; layers.forEach(function(l){ if(l){ l.s=acc/totalLen; acc+=l.len; l.e=acc/totalLen; } });
-    // printed look: each layer is a rounded bead, bright on top, shaded underneath
-    printed=document.createElement("canvas"); printed.width=mw; printed.height=mh;
-    var p=printed.getContext("2d"); p.scale(dpr,dpr);
-    for(var k=0;k<N;k++){ var yb=bh-(k+1)*LH, g=p.createLinearGradient(0,yb,0,yb+LH);
-      g.addColorStop(0,"#7d8086"); g.addColorStop(.18,"#e9eaec"); g.addColorStop(.45,"#f6f6f7"); g.addColorStop(.75,"#b9bbbf"); g.addColorStop(1,"#55585d");
-      p.fillStyle=g; p.fillRect(0,yb,bw+2,LH+.4); }
-    p.setTransform(1,0,0,1,0,0); p.globalCompositeOperation="destination-in"; p.drawImage(mask,0,0);
-    hot=document.createElement("canvas"); hot.width=mw; hot.height=mh;
-    var h=hot.getContext("2d"); h.fillStyle="#ff8a3d"; h.fillRect(0,0,mw,mh); h.globalCompositeOperation="destination-in"; h.drawImage(mask,0,0);
-    lays.textContent=String(N).padStart(2,"0");
-    port.style.top=(bedY+Math.max(46,fs*.42))+"px";
-  }
-  build();
-  if(document.fonts&&document.fonts.load){ Promise.race([document.fonts.load('400 100px "Inter Tight"'),new Promise(function(r){ setTimeout(r,1500); })]).then(function(){ if(!started) build(); }); }
-  addEventListener("resize",function(){ if(!done) build(); });
-
-  // nozzle position along the print, 0..1
-  function printPos(f){
-    if(f<=0){ var l0=first(); return {L:l0.i,x:l0.dir>0?l0.x0:l0.x1,cur:l0,u:0}; }
-    for(var i=0;i<layers.length;i++){ var l=layers[i]; if(!l) continue;
-      if(f<=l.e){ var u=(f-l.s)/(l.e-l.s); return {L:l.i,x:l.dir>0?lerp(l.x0,l.x1,u):lerp(l.x1,l.x0,u),cur:l,u:u}; } }
-    var lz=lastL(); return {L:lz.i,x:lz.dir>0?lz.x1:lz.x0,cur:lz,u:1};
-  }
-  function first(){ for(var i=0;i<layers.length;i++) if(layers[i]) return layers[i]; }
-  function lastL(){ for(var i=layers.length-1;i>=0;i--) if(layers[i]) return layers[i]; }
-
-  function drawBed(){
-    var x0=bx-Math.max(40,fs*.35), x1=bx+bw+Math.max(40,fs*.35);
-    ctx.save(); ctx.translate(W/2,bedY+16); ctx.scale(1,.12);
-    var r=(x1-x0)*.62, sh=ctx.createRadialGradient(0,0,0,0,0,r); sh.addColorStop(0,"rgba(255,255,255,.07)"); sh.addColorStop(1,"rgba(255,255,255,0)");
-    ctx.fillStyle=sh; ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2); ctx.fill(); ctx.restore();
-    var g=ctx.createLinearGradient(0,bedY,0,bedY+12); g.addColorStop(0,"#3a3c40"); g.addColorStop(.2,"#232528"); g.addColorStop(1,"#111214");
-    ctx.fillStyle=g; ctx.fillRect(x0,bedY,x1-x0,12);
-    ctx.fillStyle="rgba(255,255,255,.22)"; ctx.fillRect(x0,bedY,x1-x0,1);
-    ctx.fillStyle="#0b0c0d"; ctx.fillRect(x0+18,bedY+12,10,10); ctx.fillRect(x1-28,bedY+12,10,10);
-  }
-  function drawLayers(pos,all){
-    var d=dpr;
-    if(all){ ctx.drawImage(printed,bx-.5/d*0,by,bw+2/d,bh+2/d); return; }
-    // finished layers: one blit of everything below the current layer
-    var topY=pos.cur.y+LH; // css px within block
-    if(topY<bh){ ctx.drawImage(printed,0,Math.round(topY*d),printed.width,printed.height-Math.round(topY*d),bx,by+Math.round(topY*d)/d,printed.width/d,(printed.height-Math.round(topY*d))/d); }
-    // current layer, laid down from its start up to the nozzle
-    var l=pos.cur, a=l.dir>0?l.x0:pos.x, b=l.dir>0?pos.x:l.x1;
-    if(b>a){ var sy=Math.round(l.y*d), sh=Math.round(LH*d)+1, sx=Math.max(0,Math.round(a*d)), sw=Math.max(1,Math.round((b-a)*d));
-      ctx.drawImage(printed,sx,sy,sw,sh,bx+sx/d,by+sy/d,sw/d,sh/d);
-      // fresh filament glows hot just behind the nozzle and cools as it trails away
-      for(var k=0;k<10;k++){ var seg=9*sc, xa=l.dir>0?pos.x-(k+1)*seg:pos.x+k*seg, xb=xa+seg; xa=Math.max(a,xa); xb=Math.min(b,xb); if(xb<=xa) continue;
-        ctx.globalAlpha=.85*(1-k/10)*(1-k/10); var hx=Math.round(xa*d), hw=Math.max(1,Math.round((xb-xa)*d));
-        ctx.drawImage(hot,hx,sy,hw,sh,bx+hx/d,by+sy/d,hw/d,sh/d); }
-      ctx.globalAlpha=1; }
-  }
-  function drawHead(x,y,extruding,t){
-    var s=sc;
-    ctx.save(); ctx.translate(x,y); ctx.scale(s,s);
-    // filament feeding into the extruder
-    ctx.strokeStyle="rgba(233,235,238,.55)"; ctx.lineWidth=1.6/s; ctx.beginPath(); ctx.moveTo(0,-112); ctx.bezierCurveTo(0,-200,(W/2-x)/s*.4,-(y/s)*.7,(W/2-x)/s*.6,-y/s-10); ctx.stroke();
-    // carriage
-    ctx.fillStyle="#141517"; ctx.strokeStyle="#3d4045"; ctx.lineWidth=1/s; ctx.fillRect(-34,-124,82,30); ctx.strokeRect(-34,-124,82,30);
-    ctx.fillStyle="#5f6268"; ctx.font='500 9px "JetBrains Mono",monospace'; ctx.textAlign="center"; ctx.fillText("BS-01",7,-105);
-    // heat sink with fins
-    ctx.fillStyle="#2a2c30"; ctx.fillRect(-13,-94,26,40);
-    ctx.strokeStyle="#6a6d73"; ctx.lineWidth=1/s; for(var i=0;i<9;i++){ ctx.beginPath(); ctx.moveTo(-13,-90+i*4.4); ctx.lineTo(13,-90+i*4.4); ctx.stroke(); }
-    // part-cooling fan
-    ctx.fillStyle="#18191c"; ctx.strokeStyle="#45484d"; ctx.fillRect(15,-92,32,32); ctx.strokeRect(15,-92,32,32);
-    ctx.save(); ctx.translate(31,-76); ctx.rotate(t*18); ctx.strokeStyle="#7a7d83"; ctx.lineWidth=2/s; for(var b=0;b<5;b++){ ctx.rotate(Math.PI*2/5); ctx.beginPath(); ctx.moveTo(0,0); ctx.quadraticCurveTo(6,-4,11,0); ctx.stroke(); } ctx.restore();
-    ctx.strokeStyle="#45484d"; ctx.beginPath(); ctx.arc(31,-76,13,0,Math.PI*2); ctx.stroke();
-    // heat break
-    ctx.fillStyle="#8b8e94"; ctx.fillRect(-3.5,-54,7,12);
-    // heater block
-    var hg=ctx.createLinearGradient(-18,0,16,0); hg.addColorStop(0,"#7f8288"); hg.addColorStop(.4,"#d7d9dc"); hg.addColorStop(1,"#8a8d92");
-    ctx.fillStyle=hg; ctx.fillRect(-18,-42,32,20);
-    ctx.strokeStyle="#c94b2a"; ctx.lineWidth=1.4/s; ctx.beginPath(); ctx.moveTo(-18,-34); ctx.quadraticCurveTo(-30,-30,-34,-52); ctx.stroke();
-    // brass nozzle
-    var ng=ctx.createLinearGradient(-6,0,6,0); ng.addColorStop(0,"#9b7a3b"); ng.addColorStop(.5,"#e2c27a"); ng.addColorStop(1,"#a5823f");
-    ctx.fillStyle=ng; ctx.beginPath(); ctx.moveTo(-7,-22); ctx.lineTo(7,-22); ctx.lineTo(2,-1); ctx.lineTo(-2,-1); ctx.closePath(); ctx.fill();
-    ctx.restore();
-    if(extruding){ var gl=ctx.createRadialGradient(x,y,0,x,y,16*s); gl.addColorStop(0,"rgba(255,170,90,.75)"); gl.addColorStop(1,"rgba(255,120,40,0)"); ctx.fillStyle=gl; ctx.beginPath(); ctx.arc(x,y,16*s,0,Math.PI*2); ctx.fill(); }
-  }
-  function drawRails(y){
-    var ry=y-110*sc;
-    ctx.fillStyle="rgba(255,255,255,.13)"; ctx.fillRect(0,ry-1,W,2); ctx.fillRect(0,ry+11*sc,W,2);
-    ctx.fillStyle="rgba(255,255,255,.05)"; ctx.fillRect(0,ry-4,W,1);
-  }
-
-  var t0=performance.now(), last=t0, loaded=false, skip=false, done=false, started=false, heat=0, parked=null;
+  var nm=pre.querySelector(".pre-name"), idx=0, words="BAWAN SIDDHARTH".split(" "); nm.textContent="";
+  words.forEach(function(w,wi){
+    var wd=document.createElement("span"); wd.className="wd";
+    w.split("").forEach(function(ch){
+      var o=document.createElement("span"), i=document.createElement("span"); o.className="ch"; i.textContent=ch;
+      o.style.setProperty("--d",(.15+idx*.045)+"s"); o.style.setProperty("--d2",(1+idx*.055)+"s"); o.style.setProperty("--d3",(idx*.022)+"s");
+      o.appendChild(i); wd.appendChild(o); idx++;
+    });
+    nm.appendChild(wd); if(wi<words.length-1) nm.appendChild(document.createTextNode(" "));
+  });
+  var tg=document.getElementById("preTicks"), ns="http://www.w3.org/2000/svg";
+  for(var k=0;k<72;k++){ var a=k/72*Math.PI*2, L=k%6===0?6:3, l=document.createElementNS(ns,"line");
+    l.setAttribute("x1",100+Math.cos(a)*92); l.setAttribute("y1",100+Math.sin(a)*92); l.setAttribute("x2",100+Math.cos(a)*(92-L)); l.setAttribute("y2",100+Math.sin(a)*(92-L)); tg.appendChild(l); }
+  var bar=document.getElementById("preBar"), num=document.getElementById("preNum"), task=document.getElementById("preTask");
+  var TASKS=[[0,"Initialising system"],[.22,"Loading kinematics"],[.48,"Calibrating sensors"],[.74,"Commissioning line"],[1,"System ready"]];
+  var t0=performance.now(), last=t0, p=0, loaded=false, skip=false, done=false, MIN=reduce?.7:2.6;
   var whenLoaded=new Promise(function(r){ if(document.readyState==="complete") r(); else addEventListener("load",r); });
-  Promise.race([whenLoaded,new Promise(function(r){ setTimeout(r,8000); })]).then(function(){ loaded=true; });
-  var parkX=function(){ return Math.min(W-40,bx+bw+Math.max(70,fs*.6)); }, parkY=function(){ return bedY-Math.max(90,bh*.9); };
-
-  function frame(now){
-    var t=(now-t0)/1000, dt=Math.min(.05,(now-last)/1000); last=now;
-    if(reduce||skip){ t=Math.max(t,T_HEAT+T_HOME+T_PRINT); }
-    ctx.clearRect(0,0,W,H);
-    var phase, f=0, hx, hy, ext=false;
-    var tp=t-T_HEAT-T_HOME;
-    if(t<T_HEAT){ phase="heat"; hx=parkX(); hy=parkY(); }
-    else if(tp<0){ phase="home"; started=true; var u=ease((t-T_HEAT)/T_HOME), p0=printPos(0); hx=lerp(parkX(),p0.x+bx,u); hy=lerp(parkY(),by+p0.cur.y,u); }
-    else if(tp<T_PRINT){ phase="print"; started=true; f=tp/T_PRINT; var pp=printPos(f); hx=bx+pp.x; hy=by+pp.cur.y; ext=true; }
-    else { phase="park"; f=1; }
-    drawBed();
-    if(phase==="print"){ drawLayers(printPos(f),false); }
-    else if(phase==="park"){ drawLayers(null,true); var pu=Math.min(1,(tp-T_PRINT)/T_PARK), pe=ease(pu), pl=printPos(1); hx=lerp(bx+pl.x,parkX(),pe); hy=lerp(by+pl.cur.y,parkY(),pe); }
-    heat=Math.min(1,heat+dt/(T_HEAT*.9));
-    if(!(phase==="park"&&pu>=1&&done)){ drawRails(hy); drawHead(hx,hy,ext,t); } else { drawRails(hy); drawHead(hx,hy,false,t); }
-    // HUD
-    var lp=phase==="print"?printPos(f).cur.i+1:(phase==="park"?N:0);
-    lay.textContent=String(lp).padStart(2,"0");
-    pct.textContent=Math.round(f*100)+"%"; bar.style.transform="scaleX("+f.toFixed(4)+")";
-    var left=Math.max(0,Math.ceil(T_HEAT+T_HOME+T_PRINT-t)); eta.textContent="0:"+String(left).padStart(2,"0");
-    tN.textContent=Math.round(24+heat*191+(heat>=1?Math.sin(now/280)*1.1:0))+"°C"; tB.textContent=Math.round(24+Math.min(1,heat*1.3)*36)+"°C";
-    var st=phase==="heat"?"Heating nozzle":phase==="home"?"Homing axes":phase==="print"?(f<.06?"Printing first layer":f>.9?"Printing top layers":"Printing walls and infill"):"Print complete";
-    if(stat.textContent!==st) stat.textContent=st;
-    if(phase==="park" && pu>=1 && loaded && !done) finish();
-    if(!pre.classList.contains("gone")) requestAnimationFrame(frame);
-  }
-  function typePortfolio(cb){
-    var word="Portfolio", i=0; port.innerHTML='<span></span><span class="caret"></span>'; var out=port.firstChild;
-    if(reduce){ out.textContent=word; return cb(); }
-    (function next(){ out.textContent=word.slice(0,++i); if(i<word.length) setTimeout(next,60); else setTimeout(cb,450); })();
-  }
+  var fonts=document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve();
+  Promise.race([Promise.all([whenLoaded,fonts]),new Promise(function(r){ setTimeout(r,6000); })]).then(function(){ loaded=true; });
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ pre.classList.add("go"); }); });
   function finish(){
-    done=true; pre.classList.add("done");
-    setTimeout(function(){ typePortfolio(function(){
-      pre.classList.add("fade");
+    if(done) return; done=true; task.textContent="System ready";
+    setTimeout(function(){
+      pre.classList.add("leave");
       setTimeout(function(){
-        pre.classList.add("open"); html.classList.remove("pre-lock");
+        pre.classList.add("out"); html.classList.remove("pre-lock");
         window.__preDone=true; window.dispatchEvent(new Event("predone"));
-        setTimeout(function(){ pre.classList.add("gone"); pre.setAttribute("aria-hidden","true"); },1300);
-      }, reduce?0:500);
-    }); }, reduce?0:350);
+        setTimeout(function(){ pre.classList.add("gone"); pre.setAttribute("aria-hidden","true"); },1200);
+      }, reduce?0:620);
+    }, reduce?150:380);
   }
-  requestAnimationFrame(frame);
+  function step(now){
+    var dt=Math.min(.05,(now-last)/1000), el=(now-t0)/1000; last=now;
+    var target= skip||(loaded&&el>=MIN) ? 1 : Math.min(.92, el/MIN*.92);
+    p+=(target-p)*Math.min(1,dt*(skip?14:5)); if(target===1&&p>.997) p=1;
+    bar.style.transform="scaleX("+p.toFixed(4)+")";
+    num.textContent=String(Math.round(p*100)).padStart(3,"0");
+    for(var i=TASKS.length-1;i>=0;i--){ if(p>=TASKS[i][0]){ if(task.textContent!==TASKS[i][1]) task.textContent=TASKS[i][1]; break; } }
+    if(p>=1) finish(); else requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
   pre.addEventListener("click",function(){ skip=true; });
   addEventListener("keydown",function(e){ if(!done&&(e.key==="Escape"||e.key==="Enter"||e.key===" ")) skip=true; });
-  setTimeout(function(){ if(!done){ skip=true; loaded=true; } },22000);
+  setTimeout(function(){ if(!done){ p=1; finish(); } },9000);
 })();
 </script>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -686,7 +574,6 @@ html.pre-lock,html.pre-lock body{overflow:hidden}
         <a href="#cell" aria-label="See the robotic sorting cell" title="Sorting cell"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg></a>
       </div>
     </div>
-    <div class="scroll-cue" aria-hidden="true"></div>
     <div class="hero-foot intro d4">
       <div class="specs">
         <p class="kicker">Technical specs</p>
@@ -1650,7 +1537,7 @@ var heroP=0, heroCopy=document.querySelector(".hero-copy"), heroFoot=document.qu
 function onScroll(){
   var h=hero.offsetHeight||1; heroP=Math.min(1,Math.max(0,scrollY/(h*.9)));
   var max=document.documentElement.scrollHeight-innerHeight; prog.style.transform="scaleX("+(max>0?scrollY/max:0)+")";
-  if(!reduce && innerWidth>=820){ heroCopy.style.transform="translateY("+(-heroP*90)+"px)"; heroCopy.style.opacity=String(1-heroP*1.3); heroFoot.style.opacity=String(1-heroP*1.6); cue.style.opacity=String(1-heroP*4); }
+  if(!reduce && innerWidth>=820){ heroCopy.style.transform="translateY("+(-heroP*90)+"px)"; heroCopy.style.opacity=String(1-heroP*1.3); heroFoot.style.opacity=String(1-heroP*1.6); }
   else { heroCopy.style.transform=""; heroCopy.style.opacity=""; heroFoot.style.opacity=""; }
 }
 addEventListener("scroll",onScroll,{passive:true}); addEventListener("resize",onScroll); onScroll();
